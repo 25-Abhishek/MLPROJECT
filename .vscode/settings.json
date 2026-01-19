@@ -1,8 +1,14 @@
 {
     "cSpell.words": [
         "Abhishek",
+        "autopct",
+        "figsize",
+        "fontsize",
         "HYPEN",
         "numpy",
-        "seaborn"
+        "regplot",
+        "seaborn",
+        "xlabel",
+        "ylabel"
     ]
 }
