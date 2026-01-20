@@ -46,6 +46,3 @@ class DataIngestion:
             logging.error("Error occurred during data ingestion")
             raise CustomException(e, sys) 
 
-if __name__ == "__main__":
-    data_ingestion = DataIngestion()
-    train_path, test_path = data_ingestion.initiate_data_ingestion(file_path='notebook/data/stud.csv')
