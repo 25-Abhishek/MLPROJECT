@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 from src.logger import logging
 from src.exception import CustomException
 from dataclasses import dataclass
+from src.components.data_transformation import DataTransformation
+from src.components.data_transformation import DataTransformationConfig 
 
 @dataclass
 class DataIngestionConfig:
@@ -46,3 +48,9 @@ class DataIngestion:
             logging.error("Error occurred during data ingestion")
             raise CustomException(e, sys) 
 
+if __name__ == "__main__":
+    data_ingestion = DataIngestion()
+    train_path, test_path = data_ingestion.initiate_data_ingestion(file_path='notebook/data/stud.csv')
+    data_transformation = DataTransformation()
+    data_transformation.initiate_data_transformation(train_path, test_path)
+    logging.info("Data transformation initiated.")
