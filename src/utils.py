@@ -3,6 +3,7 @@ import sys
 import numpy as np
 import pandas as pd
 from sklearn.metrics import r2_score
+from sklearn.model_selection import GridSearchCV
 from src.exception import CustomException
 from src.logger import logging
 import pickle 
@@ -18,16 +19,33 @@ def save_object(file_path, obj):
         logging.error("Error in save_object: %s", e)
         raise CustomException(e, sys)
 
-def evaluate_models(X_train, y_train, X_test, y_test, models):
+def evaluate_models(X_train, y_train, X_test, y_test, models ,params):
     try:
         report = {}
-        for model_name, model in models.items():
-            logging.info(f"Training model: {model_name}")
+        
+        for i in range(len(models)):
+            model = list(models.values())[i]
+            param = params[list(models.keys())[i]]
+            # Here you can implement hyperparameter tuning using GridSearchCV or RandomizedSearchCV
+            # For simplicity, we are skipping that part
+            
+            gs = GridSearchCV(model, param, cv=3)
+            gs.fit(X_train, y_train)
+            
+            model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
+            
+            # Fit the model
+            #model.fit(X_train, y_train)
+            
+            # Predicting the test set results
             y_test_pred = model.predict(X_test)
-            r2_square = r2_score(y_test, y_test_pred)
-            report[model_name] = r2_square
-            logging.info(f"{model_name} R2 Score: {r2_square}")
+            
+            # Calculating r2 score
+            test_model_score = r2_score(y_test, y_test_pred)
+            
+            report[list(models.keys())[i]] = test_model_score
+            
         return report
     except Exception as e:
         logging.error("Error in evaluate_models: %s", e)

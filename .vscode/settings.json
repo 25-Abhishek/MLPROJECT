@@ -5,6 +5,7 @@
         "figsize",
         "fontsize",
         "HYPEN",
+        "modeltrainer",
         "numpy",
         "regplot",
         "seaborn",
