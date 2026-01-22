@@ -5,6 +5,7 @@ matplotlib
 scikit-learn
 xgboost
 dill
+flask
 #pickle5
 #catboost
 #-e .
